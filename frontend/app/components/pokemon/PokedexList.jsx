@@ -22,7 +22,7 @@ export default function PokedexList({
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = list.slice(indexOfFirstRecord, indexOfLastRecord);
+  const currentRecords = list.length > 0 ? list.slice(indexOfFirstRecord, indexOfLastRecord) : [];
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
