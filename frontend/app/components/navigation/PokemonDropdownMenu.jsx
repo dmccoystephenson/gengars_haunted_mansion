@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Input } from "@nextui-org/react";
+import { Input } from "@heroui/react";
 import { IoMenu, IoCloseCircleSharp } from "react-icons/io5";
 import { menus } from "@/app/_constants/menus";
 
