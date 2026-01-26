@@ -16,9 +16,9 @@ export default function PokedexRow({ pokemon, dexNo, national, pushRoute }) {
   const abilityTwo = abilities?.two?.name.toLowerCase().replaceAll(' ', '-');
   const abilityHidden = abilities?.hidden?.name.toLowerCase().replaceAll(' ', '-');
   return (
-    <tr className="table-row">
-      {national ? <td className="p-2">{_id}</td> : <><td>{dexNo}</td><td>{_id}</td></>}
-      <td className="p-2">
+    <tr className="table-row space-x-2">
+      {national ? <td className="">{_id}</td> : <><td>{dexNo}</td><td>{_id}</td></>}
+      <td className="whitespace-nowrap">
         <Link
           href={`/pokemon/national/${_id}/${pushRoute}`}
           passhref="true"
@@ -27,7 +27,7 @@ export default function PokedexRow({ pokemon, dexNo, national, pushRoute }) {
           {name.english}
         </Link>
       </td>
-      <td className="p-2">
+      <td className="">
         <div className="flex justify-center">
           <Image
             src={`/sprites/gen_9/${_id}.png`}
@@ -37,7 +37,7 @@ export default function PokedexRow({ pokemon, dexNo, national, pushRoute }) {
           />
         </div>
       </td>
-      <td className="p-2">
+      <td className="">
         <div className="font-bold flex flex-col">
           <div
             className={`col-span-1 my-1 bg-opacity-100 rounded-md px-2 space-x-1 font-bold ${
@@ -57,7 +57,7 @@ export default function PokedexRow({ pokemon, dexNo, national, pushRoute }) {
           )}
         </div>
       </td>
-      <td className="p-2">
+      <td className="">
         <div className="flex flex-col">
           <div><Link href={`${abilityRoute}${abilityOne}`} className="text-purple-0 font-bold hover:text-purple-50">{abilities?.one?.name}</Link></div>
           <div><Link href={`${abilityRoute}${abilityTwo}`} className="text-purple-0 font-bold hover:text-purple-50">{abilities?.two?.name}</Link></div>
@@ -65,7 +65,7 @@ export default function PokedexRow({ pokemon, dexNo, national, pushRoute }) {
         </div>
       </td>
       {stats.map((stat, index) => (
-        <td key={index} className="p-2 whitespace-nowrap">
+        <td key={index} className="whitespace-nowrap">
           {stat}
         </td>
       ))}

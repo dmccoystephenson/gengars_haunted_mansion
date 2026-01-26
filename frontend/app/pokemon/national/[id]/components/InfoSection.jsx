@@ -44,11 +44,11 @@ export default function InfoSection({ pokemon }) {
               ) : (
                 <>
                   <span className="text-blue-400">
-                    M: ${pokemon.gender.male}
+                    M:{pokemon.gender.male}
                   </span>
                   <span className="text-pink-400">
                     {" "}
-                    F: ${pokemon.gender.female}
+                    F:{pokemon.gender.female}
                   </span>
                 </>
               )

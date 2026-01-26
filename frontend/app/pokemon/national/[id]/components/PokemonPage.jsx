@@ -13,6 +13,7 @@ import { pokemonGameDropDown } from "@/constants/pokemonGameDropDown";
 import DataContainer from "@/app/components/pokemon/DataContainer";
 import DataSection from "@/app/components/pokemon/DataSection";
 import PokemonCard from "@/components/pokemon/PokemonCard";
+import Circle from "../../../../components/pokemon/Circle";
 
 export default function PokemonPage({ pokemon, game, goBackRoute }) {
     const pokemonInitial = () =>
@@ -24,7 +25,7 @@ export default function PokemonPage({ pokemon, game, goBackRoute }) {
             if (pokemon.formsTab) {
                 return pokemon.formsTab[pokemon.startingIndex].gameDropDown[0];
             } else {
-                if (pokemon.gameDropDown.length > 0) {
+                if (pokemon?.gameDropDown.length > 0) {
                     return pokemon.gameDropDown[0];
                 }
             }
@@ -125,6 +126,7 @@ export default function PokemonPage({ pokemon, game, goBackRoute }) {
                 {Object.keys(selectedPokemon.pokedexEntries).length > 0 && (
                     <PokedexEntries entries={selectedPokemon.pokedexEntries} />
                 )}
+                <Circle />
             </div>
         </div>
     );

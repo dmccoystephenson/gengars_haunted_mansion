@@ -101,6 +101,8 @@
 
   .table-row {
     @apply
+    flex
+    flex-row
     text-center 
     odd:bg-gray-600 
     hover:bg-gray-900 
