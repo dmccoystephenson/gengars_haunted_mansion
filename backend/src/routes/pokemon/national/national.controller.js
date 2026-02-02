@@ -144,7 +144,7 @@ const getPokemonBaseStats = (baseStats) => {
     tier: getTierColor(spdWidth),
     width: spdWidth
   };
-  
+
   return {
     hp,
     atk,
@@ -194,7 +194,7 @@ const getTierColor = (stat) => {
     five: "bg-sky-300",
     six: "bg-purple-200",
   };
-  
+
   if (stat <= 16.6) {
     tierColor = tier.one;
   } else if (16.6 < stat && stat < 33.2) {
@@ -207,7 +207,7 @@ const getTierColor = (stat) => {
     tierColor = tier.five;
   } else if (83 <= stat && stat < 100) {
     tierColor = tier.six;
-  }  
+  }
   return tierColor;
 }
 
@@ -256,7 +256,7 @@ const reformatPokemonBaseStats = asyncHandler(async (request, response, next) =>
 const reformatPokemonEvolution = asyncHandler(async (request, response, next) => {
   const { pokemon } = response.locals;
   // If evolution is not null, pokemon without evo lines are null
-  if (pokemon.evolution){
+  if (pokemon.evolution) {
     // Get evolution object tree
     const evolutionTree = await Evolutions.findById(pokemon.evolution);
     // If pokemon has a tree, else DB does not yet contain tree
