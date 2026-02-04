@@ -1,6 +1,6 @@
 const express = require("express");
 const notFound = require('./src/errors/notFound');
-const errorHandler = require('./src/errors/errorHandler');
+const errorHandler = require('./src/errors/errorHandler').default.default;
 const cors = require('cors');
 require('dotenv').config();
 const colors = require('colors');
