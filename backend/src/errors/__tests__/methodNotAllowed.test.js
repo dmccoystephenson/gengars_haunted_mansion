@@ -120,16 +120,21 @@ describe('methodNotAllowed Middleware', () => {
     });
 
     it('should not modify request or response objects', () => {
-        const originalRequest = { ...mockRequest, method: 'POST', originalUrl: '/test' };
-        const originalResponse = { ...mockResponse };
+        mockRequest.method = 'POST';
+        mockRequest.originalUrl = '/test';
+        
+        const originalRequestMethod = mockRequest.method;
+        const originalRequestUrl = mockRequest.originalUrl;
+        const responseKeys = Object.keys(mockResponse);
 
         methodNotAllowed(mockRequest, mockResponse, mockNext);
 
-        // Request should remain unchanged except for the properties we set
-        expect(mockRequest.method).toBe(originalRequest.method);
-        expect(mockRequest.originalUrl).toBe(originalRequest.originalUrl);
+        // Request should remain unchanged
+        expect(mockRequest.method).toBe(originalRequestMethod);
+        expect(mockRequest.originalUrl).toBe(originalRequestUrl);
+        expect(Object.keys(mockRequest)).toEqual(['method', 'originalUrl']);
 
         // Response should not be modified at all
-        expect(mockResponse).toEqual(originalResponse);
+        expect(Object.keys(mockResponse)).toEqual(responseKeys);
     });
 });

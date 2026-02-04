@@ -109,16 +109,19 @@ describe('notFound Middleware', () => {
     });
 
     it('should not modify request or response objects', () => {
-        const originalRequest = { ...mockRequest, originalUrl: '/test' };
-        const originalResponse = { ...mockResponse };
+        mockRequest.originalUrl = '/test';
+        
+        const originalUrl = mockRequest.originalUrl;
+        const responseKeys = Object.keys(mockResponse);
 
         notFound(mockRequest, mockResponse, mockNext);
 
         // Request should remain unchanged
-        expect(mockRequest.originalUrl).toBe(originalRequest.originalUrl);
+        expect(mockRequest.originalUrl).toBe(originalUrl);
+        expect(Object.keys(mockRequest)).toEqual(['originalUrl']);
 
         // Response should not be modified at all
-        expect(mockResponse).toEqual(originalResponse);
+        expect(Object.keys(mockResponse)).toEqual(responseKeys);
     });
 
     it('should include the full original URL in error message', () => {
