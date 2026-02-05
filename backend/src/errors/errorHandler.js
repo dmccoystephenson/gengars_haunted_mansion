@@ -2,7 +2,10 @@
  * @fileoverview Handle error responses for the application.
  * @author Brendan Archer <archer.brendan@proton.me>
  * @version 2.0.0
- * @since 2026-02-04
+ * @since 2023-11-01
+ * 
+ * 1.0.0 - Initial implementation of error handler middleware.
+ * 2.0.0 - Added enhanced logging and environment-specific features.
  */
 
 require('colors');
