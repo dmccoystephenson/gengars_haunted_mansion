@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PokemonTabs from '@/components/pokemon/PokemonTabs';
+// import PokemonTabs from '@/components/pokemon/PokemonTabs';
 
 const dataMenu = [
     {title:'National Dex',route:'/pokemon/national'},
@@ -53,7 +53,7 @@ export default function PokemonSideMenu() {
   return (
     <div>
       <div className={"tablet:hidden"}>
-        <PokemonTabs />
+        {/* <PokemonTabs /> */}
       </div>
       <div className="hidden tablet:visible tablet:flex flex-col font-mono space-y-2 p-2 text-left text-lg border bg-gray-700 m-2 rounded-xl border-purple-400">
         <SideBarIcon route={"/pokemon"} text={"Pokemon Home"} />
