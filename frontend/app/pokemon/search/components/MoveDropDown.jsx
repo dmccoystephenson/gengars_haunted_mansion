@@ -9,11 +9,14 @@ export default function MoveDropDown({
   list,
 }) {
   const [query, setQuery] = useState("");
+  
+  // Ensure list is always an array
+  const movesList = Array.isArray(list) ? list : [];
 
   const filteredList =
     query === ""
-      ? list
-      : list.filter((value) =>
+      ? movesList
+      : movesList.filter((value) =>
           value.name.english
             .toLowerCase()
             .replace(/\s+/g, "")
