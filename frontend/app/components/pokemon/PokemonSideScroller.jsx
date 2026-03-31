@@ -22,6 +22,7 @@ export default function PokemonSideScroller({ list, margin, terra }) {
             notes,
           }) => (
             <PokemonBuildModal
+              key={id}
               id={id}
               name={name}
               type={type}

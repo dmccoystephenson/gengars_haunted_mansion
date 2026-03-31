@@ -2,7 +2,10 @@
   "scripts": {
     "dev": "concurrently \"cd backend && npm run start\" \"cd frontend && npm run dev\"",
     "backend": "cd backend && npm run start",
-    "setup": "yarn install && cd backend && yarn install && cd ../frontend && yarn install"
+    "setup": "yarn install && cd backend && yarn install && cd ../frontend && yarn install",
+    "build": "cd frontend && yarn build",
+    "build:backend": "cd backend && echo 'Backend has no build step'",
+    "build:all": "yarn build:backend && yarn build"
   },
   "dependencies": {
     "concurrently": "^7.3.0",

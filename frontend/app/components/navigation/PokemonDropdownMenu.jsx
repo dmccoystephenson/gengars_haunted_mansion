@@ -23,7 +23,7 @@ export default function PokemonDropdownMenu() {
                     className="fixed top-20 right-0 w-full phone:w-1/2 h-1/2 overflow-y-scroll bg-gray-900 border-4 rounded border-purple-100 py-2 text-gray-700 dark:text-gray-200"
                     aria-labelledby="dropdownMenuIconButton"
                 >
-                    <div className="p-3">
+                    <li className="p-3">
                         <label htmlFor="input-group-search" className="sr-only">
                             Search
                         </label>
@@ -52,9 +52,9 @@ export default function PokemonDropdownMenu() {
                                 placeholder="Search user"
                             />
                         </div>
-                    </div>
+                    </li>
                     {menus.map((menuItem, index) => (
-                        <div key={index} className="border-b border-purple-100 m-2 pb-2">
+                        <li key={index} className="border-b border-purple-100 m-2 pb-2">
                             <div className="bg-gray-800 text-gray-100 mb-2 rounded py-1 px-2">
                                 {menuItem.title}
                             </div>
@@ -67,7 +67,7 @@ export default function PokemonDropdownMenu() {
                                     </Link>
                                 ))}
                             </div>
-                        </div>
+                        </li>
                     ))}
                 </ul>
             </div>
