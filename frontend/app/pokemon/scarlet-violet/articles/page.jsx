@@ -4,8 +4,6 @@ import PokemonLayout from '@/components/layouts/PokemonLayout';
 
 export default function Articles() {
   return (
-    <PokemonLayout>
       <ArticlesList list={scarletVioletList} route={'/pokemon/scarlet-violet/articles/'} />
-    </PokemonLayout>
   );
 }

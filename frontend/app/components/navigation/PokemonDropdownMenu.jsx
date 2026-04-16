@@ -24,14 +24,14 @@ export default function PokemonDropdownMenu() {
                     className="fixed top-20 right-0 w-full phone:w-1/2 h-1/2 overflow-y-scroll bg-gray-900 border-4 rounded border-purple-100 py-2 text-gray-700 dark:text-gray-200"
                     aria-labelledby="dropdownMenuIconButton"
                 >
-                    <div class="p-3">
-                        <label for="input-group-search" class="sr-only">
+                    <li className="p-3">
+                        <label htmlFor="input-group-search" className="sr-only">
                             Search
                         </label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <div className="relative">
+                            <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                                 <svg
-                                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
                                     aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -49,26 +49,26 @@ export default function PokemonDropdownMenu() {
                             <Input
                                 type="text"
                                 id="input-group-search"
-                                class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Search user"
                             />
                         </div>
-                    </div>
-                    {menus.map((menuItem) => (
-                        <div className="border-b border-purple-100 m-2 pb-2">
+                    </li>
+                    {menus.map((menuItem, index) => (
+                        <li key={index} className="border-b border-purple-100 m-2 pb-2">
                             <div className="bg-gray-800 text-gray-100 mb-2 rounded py-1 px-2">
                                 {menuItem.title}
                             </div>
                             <div className="col-flex space-y-2">
-                                {menuItem.list.map((listItem) => (
-                                    <Link href={listItem.route} scroll={false} passHref>
+                                {menuItem.list.map((listItem, idx) => (
+                                    <Link key={idx} href={listItem.route} scroll={false} passHref>
                                         <button className="w-full text-left bg-purple-500 text-gray-100 py-0.5 px-2 rounded hover:bg-purple-100">
                                             {listItem.title}
                                         </button>
                                     </Link>
                                 ))}
                             </div>
-                        </div>
+                        </li>
                     ))}
                 </ul>
             </div>

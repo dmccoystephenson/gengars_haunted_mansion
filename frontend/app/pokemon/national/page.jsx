@@ -1,4 +1,4 @@
-import NationalDexList from "./components/nationalDexList";
+import NationalDexList from "./components/NationalDexList";
 import { createSearchQuery } from "@/helperFunctions/createSearchQuery";
 
 const getNationalDex = async (searchParams) => {
