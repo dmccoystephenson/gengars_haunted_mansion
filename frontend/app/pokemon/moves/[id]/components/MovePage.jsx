@@ -34,8 +34,9 @@ export default function MovePage({ move, game }) {
         <div className="font-mono">
             <DataContainer title={`${move.name.english} [move]`}>
                 <DataSection>
-                    {rows.map((row) => (
+                    {rows.map((row, index) => (
                         <DataRow
+                            key={index}
                             title={row.title}
                             info={row.info}
                             widthOne={"w-1/2 phone:w-1/4"}
@@ -57,7 +58,7 @@ export default function MovePage({ move, game }) {
                         {move.pokemonThatLearnMove["level-up"] &&
                             move.pokemonThatLearnMove["level-up"].map(
                                 (pokemon) => (
-                                    <PokemonLinkCard pokemon={pokemon} />
+                                    <PokemonLinkCard key={pokemon._id || pokemon.id} pokemon={pokemon} />
                                 )
                             )}
                     </div>

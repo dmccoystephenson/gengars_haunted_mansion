@@ -22,7 +22,8 @@ export default function PokedexList({
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = list.length > 0 ? list.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const currentRecords =
+    list.length > 0 ? list.slice(indexOfFirstRecord, indexOfLastRecord) : [];
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -33,25 +34,24 @@ export default function PokedexList({
         totalCount={list.length}
         paginate={paginate}
         currentPage={currentPage}
-        children={
-          <PokemonTableLayout
-            thead={headers.map((header, index) => (
-              <th key={index} className="p-2">
-                {header}
-              </th>
-            ))}
-            tbody={currentRecords.map((pokemon) => (
-              <PokedexRow
-                key={pokemon._id}
-                pokemon={pokemon}
-                dexNo={game ? pokemon.pokedexNumber[game] : null}
-                national={national}
-                pushRoute={pushRoute}
-              />
-            ))}
-          />
-        }
-      ></PaginationLayout>
+      >
+        <PokemonTableLayout
+          thead={headers.map((header, index) => (
+            <th key={index} className="p-2">
+              {header}
+            </th>
+          ))}
+          tbody={currentRecords.map((pokemon) => (
+            <PokedexRow
+              key={pokemon._id}
+              pokemon={pokemon}
+              dexNo={game ? pokemon.pokedexNumber[game] : null}
+              national={national}
+              pushRoute={pushRoute}
+            />
+          ))}
+        />
+      </PaginationLayout>
     </div>
   );
 }

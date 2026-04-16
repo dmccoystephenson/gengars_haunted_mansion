@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import PokemonTableLayout from "../../../components/pokemon/PokemonTableLayout";
@@ -21,18 +21,17 @@ export default function MovesList({ list }) {
       totalCount={list.length}
       paginate={paginate}
       currentPage={currentPage}
-      children={
-        <PokemonTableLayout
-          thead={moves.map((header, index) => (
-            <th key={index} className="py-1 px-1 text-center">
-              {header}
-            </th>
-          ))}
-          tbody={currentRecords.map((move) => (
-            <MovesRow key={move._id} move={move} />
-          ))}
-        />
-      }
-    ></PaginationLayout>
+    >
+      <PokemonTableLayout
+        thead={moves.map((header, index) => (
+          <th key={index} className="py-1 px-1 text-center">
+            {header}
+          </th>
+        ))}
+        tbody={currentRecords.map((move) => (
+          <MovesRow key={move._id} move={move} />
+        ))}
+      />
+    </PaginationLayout>
   );
 }

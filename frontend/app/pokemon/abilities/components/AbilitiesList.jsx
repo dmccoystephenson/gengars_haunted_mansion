@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import PaginationLayout from "@/components/pagination/PaginationLayout";
@@ -21,18 +21,17 @@ export default function AbilitiesList({ list }) {
       totalCount={list.length}
       paginate={paginate}
       currentPage={currentPage}
-      children={
-        <PokemonTableLayout
-          thead={abilities.map((header, index) => (
-            <th key={index} className="p-2">
-              {header}
-            </th>
-          ))}
-          tbody={currentRecords.map((ability) => (
-            <AbilitiesRow key={ability._id} ability={ability} />
-          ))}
-        />
-      }
-    ></PaginationLayout>
+    >
+      <PokemonTableLayout
+        thead={abilities.map((header, index) => (
+          <th key={index} className="p-2">
+            {header}
+          </th>
+        ))}
+        tbody={currentRecords.map((ability) => (
+          <AbilitiesRow key={ability._id} ability={ability} />
+        ))}
+      />
+    </PaginationLayout>
   );
 }

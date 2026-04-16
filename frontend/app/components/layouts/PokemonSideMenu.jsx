@@ -57,8 +57,8 @@ export default function PokemonSideMenu() {
       </div>
       <div className="hidden tablet:visible tablet:flex flex-col font-mono space-y-2 p-2 text-left text-lg border bg-gray-700 m-2 rounded-xl border-purple-400">
         <SideBarIcon route={"/pokemon"} text={"Pokemon Home"} />
-        {menus.map((menuItem) => (
-          <div className=" space-y-2 pb-2 border-b border-purple-100">
+        {menus.map((menuItem, index) => (
+          <div key={index} className=" space-y-2 pb-2 border-b border-purple-100">
             <div className="bg-gray-900 text-gray-100 font-bold py-1 px-2 rounded w-fit">{menuItem.title}</div>
             <div className={"pl-4  flex flex-col space-y-1"}>
               {menuItem.list.map((page, index) => (

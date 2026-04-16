@@ -73,7 +73,7 @@ export default function PokemonBuild({
                 <div className={'p-2 space-y-1'}>
                     <h2 className={'underline text-purple-100'}>Ev Spread</h2>
                     <div className={'justify-center space-x-2 flex flex-row'}>
-                        {evs.map((ev) => <span>{ev.name}:{ev.value}</span>)}
+                        {evs.map((ev, index) => <span key={index}>{ev.name}:{ev.value}</span>)}
                     </div>
                 </div>
             </div>

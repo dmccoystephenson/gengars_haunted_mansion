@@ -71,6 +71,7 @@ export default function PokemonPage({ pokemon, game, goBackRoute }) {
                         <div className="p-2 space-x-2">
                             {selectedPokemon.formsTab.map((form, index) => (
                                 <button
+                                    key={index}
                                     onClick={() =>
                                         setSelectedPokemon(
                                             pokemon.formsTab[index]

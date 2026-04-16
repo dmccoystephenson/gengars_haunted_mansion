@@ -64,7 +64,7 @@ export default function BaseStats({
                     255.
                 </DataSection>
                 <DataSection>
-                    This shows a better representation of where a Pokémon's base
+                    This shows a better representation of where a Pokémon&apos;s base
                     stat lies compared to the highest that stat can be. The
                     length of the stat relative to the Tier also shows where it
                     sits inside the Tier.

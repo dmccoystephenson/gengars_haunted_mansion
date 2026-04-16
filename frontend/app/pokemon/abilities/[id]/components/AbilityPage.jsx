@@ -15,8 +15,9 @@ export default function AbilityPage({ ability }) {
         <div className={"font-mono"}>
             <DataContainer title={`${ability?.name?.english} [ability]`}>
                 <DataSection>
-                    {rows.map((row) => (
+                    {rows.map((row, index) => (
                         <DataRow
+                            key={index}
                             title={row.title}
                             info={row.info}
                             widthOne={"w-1/2 phone:w-1/4"}
@@ -30,8 +31,8 @@ export default function AbilityPage({ ability }) {
                 <DataSection>
                     <div className="grid grid-cols-1 phone:grid-cols-2 tablet:grid-cols-4">
                         {ability.pokemonWithAbility.normal &&
-                            ability.pokemonWithAbility.normal.map((pokemon) => (
-                                <PokemonLinkCard pokemon={pokemon} />
+                            ability.pokemonWithAbility.normal.map((pokemon, index) => (
+                                <PokemonLinkCard key={index} pokemon={pokemon} />
                             ))}
                     </div>
                 </DataSection>
@@ -40,8 +41,8 @@ export default function AbilityPage({ ability }) {
                 <DataSection>
                     <div className="grid grid-cols-1 phone:grid-cols-2 tablet:grid-cols-4">
                         {ability.pokemonWithAbility.hidden &&
-                            ability.pokemonWithAbility.hidden.map((pokemon) => (
-                                <PokemonLinkCard pokemon={pokemon} />
+                            ability.pokemonWithAbility.hidden.map((pokemon, index) => (
+                                <PokemonLinkCard key={index} pokemon={pokemon} />
                             ))}
                     </div>
                 </DataSection>

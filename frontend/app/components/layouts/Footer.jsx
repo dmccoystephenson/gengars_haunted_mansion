@@ -10,7 +10,7 @@ export default function Header() {
                 width={100}
                 className={`items-center`}
             />
-            <div className="p-5 text-purple-200 font-mono font-extrabold text-[min(5vw,60px)]">Gengar's Haunted Mansion</div>
+            <div className="p-5 text-purple-200 font-mono font-extrabold text-[min(5vw,60px)]">Gengar&apos;s Haunted Mansion</div>
         </div>
     )
 }

@@ -26,25 +26,24 @@ export default function NationalDexList({ pokedex }) {
         totalCount={pokedex.length}
         paginate={paginate}
         currentPage={currentPage}
-        children={
-          <PokemonTableLayout
-            thead={nationalHeaders.map((header, index) => (
-              <th key={index} className="p-2">
-                {header}
-              </th>
-            ))}
-            tbody={currentRecords.map((pokemon) => (
-              <PokedexRow
-                key={pokemon._id}
-                pokemon={pokemon}
-                dexNo={null}
+      >
+        <PokemonTableLayout
+          thead={nationalHeaders.map((header, index) => (
+            <th key={index} className="p-2">
+              {header}
+            </th>
+          ))}
+          tbody={currentRecords.map((pokemon) => (
+            <PokedexRow
+              key={pokemon._id}
+              pokemon={pokemon}
+              dexNo={null}
                 national={true}
                 pushRoute={""}
               />
             ))}
           />
-        }
-      ></PaginationLayout>
+      </PaginationLayout>
     </div>
   );
 }

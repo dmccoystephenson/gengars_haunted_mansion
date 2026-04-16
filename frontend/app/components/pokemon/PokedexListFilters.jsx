@@ -111,8 +111,8 @@ export default function PokedexListFilters({
           <div className="flex flex-col">
             <FilterLabel label={"Pick a type"} />
             <div className="flex flex-wrap">
-              {types.map((type) => (
-                <button onClick={(event) => onTypeSelectHandler(event, type)}>
+              {types.map((type, index) => (
+                <button key={index} onClick={(event) => onTypeSelectHandler(event, type)}>
                   <Image
                     src={`/pokemon/typeIcons/${type.toLowerCase()}.svg`}
                     alt={type}
@@ -131,8 +131,8 @@ export default function PokedexListFilters({
           {/* <div className="flex flex-col">
             <FilterLabel label={"Pick another type"} />
             <div className="flex flex-wrap">
-              {types.map((type) => (
-                <button onClick={() => setTypeTwo(type)}>
+              {types.map((type, index) => (
+                <button key={index} onClick={() => setTypeTwo(type)}>
                   <Image
                     src={`/pokemon/typeIcons/${type.toLowerCase()}.svg`}
                     alt={type}
@@ -151,8 +151,9 @@ export default function PokedexListFilters({
           <div className="flex flex-col">
             <FilterLabel label={"Asc = Lowest first / Desc = Greatest first"} />
             <div className="flex flex-row">
-              {sorting.map((sort) => (
+              {sorting.map((sort, index) => (
                 <button
+                  key={index}
                   onClick={() => setSortSelected(sort)}
                   className={`w-1/2 bg-gray-900 rounded-lg p-4 m-1 text-purple-50 ${
                     sort === sortSelected
@@ -169,8 +170,9 @@ export default function PokedexListFilters({
           <div className="flex flex-col">
             <FilterLabel label={"Select stat to sort by"} />
             <div className="grid grid-cols-3 tablet:grid-cols-6">
-              {stats.map((stat) => (
+              {stats.map((stat, index) => (
                 <button
+                  key={index}
                   onClick={() => setStatSelected(stat)}
                   className={`col-span-1 bg-gray-900 rounded-lg p-4 m-1 text-purple-50 ${
                     stat === statSelected
