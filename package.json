@@ -1,4 +1,6 @@
 {
+  "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "concurrently \"cd backend && npm run start\" \"cd frontend && yarn dev\"",
     "build": "cd frontend && yarn build",
