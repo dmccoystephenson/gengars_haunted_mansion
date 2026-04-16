@@ -4,6 +4,7 @@ describe('methodNotAllowed Middleware', () => {
     let mockRequest;
     let mockResponse;
     let mockNext;
+    let mockAllowedMethods;
 
     beforeEach(() => {
         mockRequest = {
