@@ -9,7 +9,9 @@
     "update": "cd backend && yarn upgrade && cd ../frontend && yarn upgrade"
   },
   "dependencies": {
-    "concurrently": "^7.3.0",
-    "react-dom": "18.2.0"
+    "concurrently": "^7.3.0"
+  },
+  "resolutions": {
+    "glob": "^10.3.10"
   }
 }

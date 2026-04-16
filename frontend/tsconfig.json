@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -9,7 +9,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -19,13 +19,12 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@/components/*": ["app/components/*"],
-      "@/constants/*": ["app/_constants/*"],
-      "@/articles/*": ["articles/*"],
-      "@/helperFunctions/*": ["helperFunctions/*"]
+      "@/components/*": ["./app/components/*"],
+      "@/constants/*": ["./app/_constants/*"],
+      "@/articles/*": ["./articles/*"],
+      "@/helperFunctions/*": ["./helperFunctions/*"]
     },
     "strictNullChecks": true
   },
