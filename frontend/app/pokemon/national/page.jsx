@@ -2,17 +2,15 @@ import NationalDexList from "./components/NationalDexList";
 import { createSearchQuery } from "@/helperFunctions/createSearchQuery";
 
 const getNationalDex = async (searchParams) => {
+  let searchQuery = "";
+
   if (Object.keys(searchParams).length > 0){
-    const searchQuery = createSearchQuery(searchParams)
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/pokemon/national${searchQuery}`);
-    const nationalDex = await response.json();
-    return nationalDex;
-  } else {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/pokemon/national`);
-    const nationalDex = await response.json();
-    return nationalDex;
+    searchQuery = createSearchQuery(searchParams);
   }
 
+  const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/pokemon/national${searchQuery}`);
+  const nationalDex = await response.json();
+  return Array.isArray(nationalDex) ? nationalDex : [];
 }
 
 export default async function Page({ params, searchParams }) {
