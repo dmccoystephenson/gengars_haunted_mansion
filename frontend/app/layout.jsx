@@ -1,20 +1,14 @@
 import "./globals.css";
-import type { Metadata } from "next";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
 import PokemonSearchBar from "@/components/pokemon/PokemonSearchBar";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Gengar's Haunted Mansion",
   description: "Haunted Mansion Home Page",
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-
+export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-gray-900 font-mono">
