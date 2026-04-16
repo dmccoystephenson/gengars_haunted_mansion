@@ -2,8 +2,8 @@ import AbilitiesList from "./components/AbilitiesList";
 
 const getAbilities = async () => {
   const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/pokemon/abilities`);
-  const abilities = await response.json();
-  return abilities;
+  const responseData = await response.json();
+  return Array.isArray(responseData) ? responseData : [];
 }
 
 export default async function AbilitiesPage() {
