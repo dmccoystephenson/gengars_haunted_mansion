@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SiPokemon } from "react-icons/si";
+import { MdCatchingPokemon } from "react-icons/md";
 
 export default function Toolbar({ id, goBackRoute }) {
   return (
@@ -12,7 +12,7 @@ export default function Toolbar({ id, goBackRoute }) {
           <button className={"bg-gray-800 p-2 rounded"}>{`< ${Math.floor(id - 1)}`}</button>
         </Link>
       ) : (
-        <SiPokemon size="50" />
+        <MdCatchingPokemon size="50" />
       )}
       <Link href={goBackRoute} passHref>
         <div className="flex justify-center">
@@ -24,7 +24,7 @@ export default function Toolbar({ id, goBackRoute }) {
           <button className={"bg-gray-800 p-2 rounded"}>{`${Math.floor(id + 1)} >`}</button>
         </Link>
       ) : (
-        <SiPokemon size="50" />
+        <MdCatchingPokemon size="50" />
       )}
     </div>
   );
