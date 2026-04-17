@@ -1,10 +1,18 @@
 {
+  "private": true,
+  "license": "UNLICENSED",
   "scripts": {
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
-    "test": "concurrently \"cd test-backend && npm run start\" \"cd frontend && npm run dev\"",
-    "setup": "yarn install && cd backend && yarn install && cd ../frontend && yarn install"
+    "dev": "concurrently \"cd test-backend && npm run start\" \"cd frontend && yarn dev\"",
+    "build": "cd frontend && yarn build",
+    "backend": "cd test-backend && npm run start",
+    "setup": "yarn install && cd test-backend && yarn install && cd ../frontend && yarn install",
+    "update": "cd test-backend && yarn upgrade && cd ../frontend && yarn upgrade"
   },
   "dependencies": {
-    "concurrently": "^7.3.0"
+    "concurrently": "^9.2.1",
+    "glob": "^13.0.6"
+  },
+  "resolutions": {
+    "glob": "^10.3.10"
   }
 }

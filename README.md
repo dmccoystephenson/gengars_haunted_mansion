@@ -2,12 +2,21 @@
 ---
 
 #### *Table of Contents*
+0. [How to get started](#how-to-get-started)
 1. [Why did I make this?](#why-did-i-make-this)
 2. [The Tech Stack](#the-tech-stack)
 3. [Structure of the Pages](#structure-of-the-pages)
 4. [Future Goals & Updates](#future-goals--updates)
 
 ---
+
+## ***How to get started***
+
+After downloading from github you want to run `yarn setup` which will download all the neccessary packages to run the app.
+
+After running setup you can run `yarn dev` which will run the backend then the frontend and you are all set to check out localhost:3000 for the client and localhost:5000 for the server.
+
+You will need a DB_CONNECTION link in order to actually establish a connection. There is a workaround to connect directly to the running version of the server but you will not be able to test backend changes without the connection link.
 
 ## ***Why did I make this?***
 
