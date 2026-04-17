@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose');
+require('colors');
 
 // Connection process
 const connect = asyncHandler(async (request, response, next) => {

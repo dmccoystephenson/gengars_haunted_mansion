@@ -50,7 +50,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.get('/', (request, response) => {
-  res.send('Gengar\'s Haunted Mansion API');
+  response.send('Gengar\'s Haunted Mansion API');
 });
 
 app.use('/pokemon', pokemonRouter);
