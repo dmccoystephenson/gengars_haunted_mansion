@@ -29,7 +29,7 @@ export default function PokemonDropdownMenu() {
                             Search
                         </label>
                         <div className="relative">
-                            <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <div className="absolute inset-y-0 rtl:inset-r-0 inset-s-0 flex items-center ps-3 pointer-events-none">
                                 <svg
                                     className="w-4 h-4 text-gray-500 dark:text-gray-400"
                                     aria-hidden="true"

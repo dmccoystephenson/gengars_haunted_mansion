@@ -1,4 +1,39 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@theme {
+  --breakpoint-phone: 480px;
+  --breakpoint-tablet: 769px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-desktop: 1200px;
+  --breakpoint-wide: 1280px;
+  --breakpoint-ultrawide: 1536px;
+
+  --color-gray-900: #202225;
+  --color-gray-800: #2f3136;
+  --color-gray-700: #36393f;
+  --color-gray-600: #4f545c;
+  --color-gray-400: #d4d7dc;
+  --color-gray-300: #e3e5e8;
+  --color-gray-200: #ebedef;
+  --color-gray-100: #f2f3f5;
+
+  --color-purple-0: #d8ceff;
+  --color-purple-50: #8d7ec4;
+  --color-purple-100: #8275b5;
+  --color-purple-200: #7a6ea8;
+  --color-purple-300: #7562a2;
+  --color-purple-400: #69578f;
+  --color-purple-500: #625386;
+  --color-purple-600: #574a74;
+  --color-purple-700: #4d4264;
+  --color-purple-800: #443b57;
+  --color-purple-900: #363142;
+
+  --font-family-newMonoR: 'newMonoR', mono;
+
+  --shadow-selected: 5px 5px 0px 0px rgba(141, 126, 196);
+  --shadow-dark-selected: 5px 5px 0px 0px rgba(32, 34, 37);
+}
 
 @layer base {
   p {
@@ -51,7 +86,7 @@
         h-px
         my-8
         border-0
-        bg-gradient-to-r 
+        bg-linear-to-r 
         from-purple-100
         to-purple-50;
   }
@@ -61,8 +96,7 @@
     text-purple-50;
   }
   pre {
-    @apply bg-gray-800
-        bg-opacity-50
+    @apply bg-gray-800/50
         rounded-lg
         text-purple-50
         m-2
@@ -307,9 +341,5 @@
   }
   .fairy-bg {
     @apply bg-fuchsia-300;
-  }
-  .ivysaur {
-    @apply
-    
   }
 }

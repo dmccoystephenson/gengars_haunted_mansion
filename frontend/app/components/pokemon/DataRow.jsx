@@ -11,7 +11,7 @@ export default function DataRow({
     <div className="flex flex-row p-1 border-b border-purple-300">
       <div className={`${widthOne} font-bold`}>{title}</div>
       {info && <div className={`${widthTwo}`}>{info}</div>}
-      {type && <div className={`px-2 rounded font-bold ${typeColors[type.toLowerCase()]}`}>{type}</div>}
+      {type && <div className={`px-2 rounded font-bold ${typeColors[type.toLowerCase()] || ""}`}>{type}</div>}
     </div>
   );
 }

@@ -14,7 +14,7 @@ export default function MovesRow({
       </td>
       <td>
         <div
-          className={`font-bold rounded m-2 ${typeColors[type.toLowerCase()]}`}
+          className={`font-bold rounded m-2 ${typeColors[type.toLowerCase()] || ""}`}
         >
           {type}
         </div>

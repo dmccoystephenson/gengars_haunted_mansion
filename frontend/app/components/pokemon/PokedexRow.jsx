@@ -40,8 +40,8 @@ export default function PokedexRow({ pokemon, dexNo, national, pushRoute }) {
       <td className="">
         <div className="font-bold flex flex-col">
           <div
-            className={`col-span-1 my-1 bg-opacity-100 rounded-md px-2 space-x-1 font-bold ${
-                typeColors[one.toLowerCase()]
+            className={`col-span-1 my-1 rounded-md px-2 space-x-1 font-bold ${
+                typeColors[one.toLowerCase()] || ""
             }`}
           >
             {one}
@@ -49,7 +49,7 @@ export default function PokedexRow({ pokemon, dexNo, national, pushRoute }) {
           {two && (
             <div
               className={`col-span-1 my-1 rounded-md px-2 space-x-1 font-bold ${
-                typeColors[two.toLowerCase()]
+                typeColors[two.toLowerCase()] || ""
               }`}
             >
               {two}

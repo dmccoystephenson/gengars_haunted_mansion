@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function InfoSection({ pokemon }) {
   return (
     <div className="col-flex space-y-2 bg-gray-600 rounded border-2 border-purple-100 text-left">
-      <div className={"bg-gradient-to-r from-purple-100 to-purple-600 rounded-tr w-full"}>
+      <div className={"bg-linear-to-r from-purple-100 to-purple-600 rounded-tr w-full"}>
         <div className={"text-2xl pl-2 font-extrabold break-normal"}>
           Pokedex Information:
         </div>
@@ -54,7 +54,7 @@ export default function InfoSection({ pokemon }) {
               )
             }
           />
-          <div className="mt-1 p-1 text-lg font-bold bg-gradient-to-r from-purple-100 to-purple-600 rounded-md">
+          <div className="mt-1 p-1 text-lg font-bold bg-linear-to-r from-purple-100 to-purple-600 rounded-md">
             Abilities
           </div>
           {pokemon.abilities.one && (

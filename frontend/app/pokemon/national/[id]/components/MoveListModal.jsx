@@ -48,7 +48,7 @@ export default function MoveListModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black/25" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
@@ -114,7 +114,7 @@ const InfoRow = ({ title, info, type, move, moveId }) => (
     {move ? (
       <Link
         href={`/pokemon/moves/${moveId}`}
-        className={`${move ? "italic" : null}`}
+        className={`${move ? "italic" : ""}`}
         passHref
       >
         {info}
@@ -122,7 +122,7 @@ const InfoRow = ({ title, info, type, move, moveId }) => (
     ) : (
       <div
         className={`w-1/2 ${
-          type ? `${typeColors[info.toLowerCase()]} text-center rounded` : ""
+          type ? `${typeColors[info.toLowerCase()] || ""} text-center rounded` : ""
         }`}
       >
         {info}

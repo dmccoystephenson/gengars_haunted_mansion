@@ -21,7 +21,7 @@ export default function PokemonLinkCard({
                 <div>{name}</div>
                 <div
                     className={`px-2 py-1 rounded font-bold ${
-                        typeColors[type.one.toLowerCase()]
+                        typeColors[type.one.toLowerCase()] || ""
                     }`}
                 >
                     {type.one}
@@ -29,7 +29,7 @@ export default function PokemonLinkCard({
                 {type.two && (
                     <div
                         className={`px-2 py-1 rounded font-bold ${
-                            typeColors[type.two.toLowerCase()]
+                            typeColors[type.two.toLowerCase()] || ""
                         }`}
                     >
                         {type.two}

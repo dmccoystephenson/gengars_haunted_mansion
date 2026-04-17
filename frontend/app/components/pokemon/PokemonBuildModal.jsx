@@ -20,7 +20,7 @@ export default function PokemonBuildModal({
     terra,
  }) {
   const styles = {
-    typec: " rounded-md bg-opacity-60 w-1/4 text-center",
+    typec: " rounded-md w-1/4 text-center opacity-60",
     test: ''
   },{test, typec} = styles;
 
@@ -52,7 +52,7 @@ export default function PokemonBuildModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black/25" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">

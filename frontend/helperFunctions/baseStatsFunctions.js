@@ -76,7 +76,7 @@ export const tierColor = (title, stat) => {
     let returnWidth = '';
     
     if (width === 0){
-      returnWidth = 'w-[1px]'
+      returnWidth = 'w-px'
     } else if (width <= 9){
       returnWidth = 'w-1/8';
     } else if(width <= 17){

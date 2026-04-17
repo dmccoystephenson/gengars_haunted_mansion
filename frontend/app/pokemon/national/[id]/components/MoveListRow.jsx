@@ -35,7 +35,7 @@ export default function MoveListRow({
         <MoveListModal move={move} />
       </td>
       <td>
-        <div className={`rounded my-1 ${typeColors[type.toLowerCase()]}`}>
+        <div className={`rounded my-1 ${typeColors[type.toLowerCase()] || ""}`}>
           {type}
         </div>
       </td>

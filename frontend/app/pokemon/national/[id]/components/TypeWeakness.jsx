@@ -35,7 +35,7 @@ export default function TypeWeakness({ typeOne, typeTwo }) {
     >
       <div
         className={
-          "bg-gradient-to-r from-purple-100 to-purple-600 rounded-tr w-full"
+          "bg-linear-to-r from-purple-100 to-purple-600 rounded-tr w-full"
         }
       >
         <div className={"text-2xl text-left pl-2 font-extrabold break-normal"}>
@@ -48,7 +48,7 @@ export default function TypeWeakness({ typeOne, typeTwo }) {
           <tr>
             {typeWeaknesses.slice(0, 9).map((type) => (
               <th key={type} className="p-1">
-                <div className={`rounded ${typeColors[type]}`}>{type}</div>
+                <div className={`rounded ${typeColors[type] || ""}`}>{type}</div>
               </th>
             ))}
           </tr>
@@ -68,7 +68,7 @@ export default function TypeWeakness({ typeOne, typeTwo }) {
           <tr>
             {typeWeaknesses.slice(9, 18).map((type) => (
               <th key={type} className="p-1">
-                <div className={`rounded ${typeColors[type]}`}>{type}</div>
+                <div className={`rounded ${typeColors[type] || ""}`}>{type}</div>
               </th>
             ))}
           </tr>

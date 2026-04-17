@@ -63,7 +63,7 @@ export default function PokemonPage({ pokemon, game, goBackRoute }) {
         <div className={"flex flex-col m-2 font-mono text-center text-white"}>
             <div className={"col-flex space-y-2"}>
                 <Toolbar id={selectedPokemon._id} goBackRoute={goBackRoute} />
-                <div className="text-xl phone:text-5xl font-bold rounded text-center py-5 bg-gradient-to-r from-purple-100 to-purple-600">
+                <div className="text-xl phone:text-5xl font-bold rounded text-center py-5 bg-linear-to-r from-purple-100 to-purple-600">
                     {selectedPokemon.name.english}
                 </div>
                 {selectedPokemon.formsTab && (
