@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import MovePage from '../components/MovePage'
 
 const getMoveByGame = async (id, game) => {

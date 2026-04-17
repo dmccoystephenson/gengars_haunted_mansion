@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import AbilitiesList from "./components/AbilitiesList";
 
 const getAbilities = async () => {

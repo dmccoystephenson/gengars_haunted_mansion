@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import NationalDexList from "./components/NationalDexList";
 import { createSearchQuery } from "@/helperFunctions/createSearchQuery";
 

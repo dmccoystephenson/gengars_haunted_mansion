@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 // import AbilitiesPage from "@/components/pokemon/AbilitiesPage";
 import AbilitiesPage from "./components/AbilityPage";
 
