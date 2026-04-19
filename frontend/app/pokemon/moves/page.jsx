@@ -1,6 +1,5 @@
 export const dynamic = 'force-dynamic';
 
-// import MovesList from "@/components/pokemon/MovesList";
 import MovesList from "./components/MovesList";
 
 const getMoves = async () => {

@@ -1,6 +1,5 @@
 export const dynamic = 'force-dynamic';
 
-import { search } from "@/app/components/variables/pokemonHeaders";
 import PokedexList from "@/components/pokemon/PokedexList";
 import { createSearchQuery } from "@/helperFunctions/createSearchQuery";
 

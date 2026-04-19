@@ -30,7 +30,6 @@ export default function GameDropDown({
             displayValue={(value) => value.title}
             onChange={(event) => {
               setQuery(event.target.value);
-              // setSelected(event.target.value)
             }}
             placeholder={placeholder}
           />

@@ -12,30 +12,19 @@ const FilterLabel = ({ label }) => (
 export default function NationalDexFilters({ searchRoute }) {
   const router = useRouter();
   const { asPath } = router;
-  const stateInitial = () => '';
   const [filters, setFilters] = useState(false);
-  const [typeOne, setTypeOne] = useState(() => stateInitial());
-  const [typeTwo, setTypeTwo] = useState(() => stateInitial());
-  const [sortSelected, setSortSelected] = useState(() => stateInitial());
-  const [statSelected, setStatSelected] = useState(() => stateInitial());
+  const [sortSelected, setSortSelected] = useState("");
+  const [statSelected, setStatSelected] = useState("");
   const [selectedTypes, setSelectedTypes] = useState([]);
   const onResetHandler = () => {
-    setTypeOne("");
-    setTypeTwo("");
+    setSelectedTypes([]);
     setSortSelected("");
     setStatSelected("");
     if (asPath !== searchRoute) {
       router.push(searchRoute);
     }
   };
-  // When filter search is clicked
   const onFilterSubmit = (event) => {
-    // create params for the query
-    // const params = {};
-    // if (typeOne !== '') { params.typeOne = typeOne };
-    // if (typeTwo !== '') { params.typeTwo = typeTwo };
-    // if (sortSelected !== '') { params.sort = sortSelected };
-    // if (statSelected !== '') { params.stat = statSelected };
     const params = {
       typeOne: selectedTypes[0] ? selectedTypes[0] : null,
       typeTwo: selectedTypes[1] ? selectedTypes[1] : null,
@@ -130,26 +119,7 @@ export default function NationalDexFilters({ searchRoute }) {
               ))}
             </div>
           </div>
-          {/* <div className="flex flex-col">
-            <FilterLabel label={"Pick another type"} />
-            <div className="flex flex-wrap">
-              {types.map((type) => (
-                <button key={type} onClick={() => setTypeTwo(type)}>
-                  <Image
-                    src={`/pokemon/typeIcons/${type.toLowerCase()}.svg`}
-                    alt={type}
-                    height={60}
-                    width={60}
-                    className={`p-1 m-1 ${
-                      typeTwo === type
-                        ? "border-4 border-purple-100 rounded-full shadow-lg shadow-purple-300"
-                        : null
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
-          </div> */}
+          
           <div className="flex flex-col">
             <FilterLabel label={"Asc = Lowest first / Desc = Greatest first"} />
             <div className="flex flex-row">
