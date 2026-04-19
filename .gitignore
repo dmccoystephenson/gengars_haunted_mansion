@@ -1,3 +1,6 @@
 # dependencies
 /node_modules
 .vercel
+
+# Runtime environment secrets (use sample.env as a template)
+.env

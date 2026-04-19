@@ -1,0 +1,80 @@
+# =============================================================================
+# Gengar's Haunted Mansion — Docker Compose
+# =============================================================================
+# Usage:
+#   cp sample.env .env          # then edit .env with your values
+#   docker compose up --build   # build and start all services
+#   docker compose down -v      # stop and remove containers + volumes
+#
+# Override variables in .env or pass them inline:
+#   PORT=8080 docker compose up --build
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # MongoDB — persistent data store
+  # ---------------------------------------------------------------------------
+  mongo:
+    image: mongo:7.0-jammy
+    restart: unless-stopped
+    environment:
+      # Credentials are read from .env (see sample.env for details)
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # API — Express.js backend (port 5000 by default)
+  # ---------------------------------------------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend
+    env_file: [.env]
+    ports:
+      - "${PORT:-5000}:${PORT:-5000}"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:${PORT:-5000}/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+  # ---------------------------------------------------------------------------
+  # App — Next.js frontend (port 3000)
+  # ---------------------------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    env_file: [.env]
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 5s
+      # Longer start period because Next.js compiles pages on first request
+      start_period: 60s
+      retries: 3
+
+# Named volumes for persistent data
+volumes:
+  mongo_data:
