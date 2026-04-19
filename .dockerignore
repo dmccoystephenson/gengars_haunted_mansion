@@ -6,6 +6,9 @@
 .vscode
 **/.vscode
 
+# Dependencies (installed fresh inside Docker)
+**/node_modules
+
 # Next.js build output
 frontend/.next
 frontend/out

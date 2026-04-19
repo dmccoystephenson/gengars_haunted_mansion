@@ -51,6 +51,9 @@ Open `.env` and review/change the following **required** variables:
 
 ### Build the images
 
+Dependencies are installed automatically inside Docker — no need to run
+`yarn setup` first.
+
 ```sh
 docker build --target backend  -t gengars-api .
 docker build --target frontend -t gengars-app .
@@ -104,10 +107,10 @@ docker run -p 3000:3000 --env-file .env gengars-app
 docker compose ps
 ```
 
-Check the health status of a specific container:
+Check the health status of the API container:
 
 ```sh
-docker inspect --format='{{.State.Health.Status}}' gengars_haunted_mansion-api-1
+docker inspect --format='{{.State.Health.Status}}' "$(docker compose ps -q api)"
 ```
 
 ### Updating

@@ -20,6 +20,12 @@ FROM node:24-alpine AS base
 # BACKEND
 # =============================================================================
 
+# ---- Install backend production dependencies inside Docker ----
+FROM base AS backend-deps
+WORKDIR /app
+COPY test-backend/package.json test-backend/yarn.lock ./
+RUN yarn install --production --frozen-lockfile
+
 # ---- Final backend image ----
 FROM base AS backend
 WORKDIR /app
@@ -27,10 +33,10 @@ WORKDIR /app
 # Run as non-root for security
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# Copy pre-installed node_modules from build context then source files.
-# node_modules are pre-installed on the host (yarn setup) and copied in
-# because the Docker build environment may lack outbound internet access.
-COPY --chown=appuser:appgroup test-backend/node_modules ./node_modules
+# Copy production deps from the deps stage (ensures Linux/musl-compatible binaries)
+COPY --from=backend-deps --chown=appuser:appgroup /app/node_modules ./node_modules
+
+# Copy only the source files needed at runtime (no tests, no dev configs)
 COPY --chown=appuser:appgroup test-backend/package.json ./
 COPY --chown=appuser:appgroup test-backend/index.js ./
 COPY --chown=appuser:appgroup test-backend/src ./src
@@ -39,9 +45,9 @@ USER appuser
 
 EXPOSE 5000
 
-# Health check: hit the root endpoint which returns a 200 text response
+# Health check: use $PORT so the check follows the runtime port configuration
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:5000/ || exit 1
+  CMD sh -c 'wget --no-verbose --tries=1 --spider "http://localhost:${PORT:-5000}/" || exit 1'
 
 CMD ["node", "index.js"]
 
@@ -49,19 +55,24 @@ CMD ["node", "index.js"]
 # FRONTEND
 # =============================================================================
 
+# ---- Install frontend dependencies inside Docker ----
+FROM base AS frontend-deps
+WORKDIR /app
+COPY frontend/package.json frontend/yarn.lock ./
+RUN yarn install --frozen-lockfile
+
 # ---- Final frontend image ----
-# We copy all deps and source, then build at container start because the
-# Next.js build pre-renders server components that fetch from the backend API.
-# The API must be reachable at build time, which is only guaranteed when the
-# container runs inside the Compose network (not during `docker build`).
+# Next.js production builds pre-render server components that fetch from the
+# backend API. The API is not reachable during `docker build`, so we run in
+# dev mode which renders on-demand instead.
 FROM base AS frontend
 WORKDIR /app
 
 # Run as non-root for security
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# Copy pre-installed node_modules from the build context
-COPY --chown=appuser:appgroup frontend/node_modules ./node_modules
+# Copy deps from the deps stage (ensures Linux/musl-compatible binaries)
+COPY --from=frontend-deps --chown=appuser:appgroup /app/node_modules ./node_modules
 
 # Copy application source and config files
 COPY --chown=appuser:appgroup frontend/package.json frontend/next.config.js ./
