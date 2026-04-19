@@ -208,12 +208,6 @@ const reformatPokemonEvolution = asyncHandler(async (request, response, next) =>
   next();
 });
 
-/**
- *  Finds a pokemon base upon its national dex _id,
- *  and reassigns its move values as object with
- *  basic move information
- * @returns {JSON} all data for a specific Pokemon
- */
 const readPokemonByGame = asyncHandler(async (request, response, next) => {
   const { pokemon, moves } = response.locals;
   const { game } = request.params;
@@ -224,12 +218,6 @@ const readPokemonByGame = asyncHandler(async (request, response, next) => {
 
 /* ----------- CRUD Ops ----------- */
 
-/**
- *  Finds a pokemon base upon its national dex _id ,
- *  and reassigns its move values as object with
- *  basic move information
- * @returns {JSON} all data for a specific Pokemon
- */
 const readPokemon = asyncHandler(async (request, response, next) => {
   const { pokemon, moves } = response.locals;
   const pokemonForms = await FormTabs.findById(Math.floor(pokemon._id)).lean();
@@ -243,12 +231,6 @@ const readPokemon = asyncHandler(async (request, response, next) => {
     response.status(200).json(pokemon);
   }
 });
-/**
- *  lists all pokemon in order of national dex _id
- *
- * @returns {JSON}
- *  The Pokemon National Dex up to 898
- */
 const listNational = asyncHandler(async (request, response) => {
   const { typeOne, typeTwo, asc, desc } = request.query;
   let national = [];

@@ -7,7 +7,6 @@ import MovesRow from "./MovesRow";
 import { moves } from "../../../components/variables/pokemonHeaders";
 
 export default function MovesList({ list }) {
-  // Pagination
   const [recordsPerPage, setRecordsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastRecord = currentPage * recordsPerPage;

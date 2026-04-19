@@ -1,6 +1,4 @@
-export default function Circle({}) {
-  // absolute -left-100 w-200% h-200% text-center pt-20
-  // skew-y-60 rotate-15
+export default function Circle() {
   return (
     <ul className="test-circle">
       <li className="test-li rotate-0">

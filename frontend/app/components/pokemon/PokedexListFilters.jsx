@@ -33,7 +33,6 @@ export default function PokedexListFilters({
       sort: sortSelected,
       stat: statSelected,
     };
-    // This pushes the route with the new query
     pokedexOnFilterSubmit(event, router, params, searchRoute);
   };
 

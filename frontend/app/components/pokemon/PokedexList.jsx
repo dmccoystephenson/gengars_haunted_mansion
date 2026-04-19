@@ -15,9 +15,7 @@ export default function PokedexList({
   search,
   searchRoute,
 }) {
-  // Set headers variables
   const headers = national ? nationalHeaders : pokedexHeaders;
-  // Pagination
   const [recordsPerPage, setRecordsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastRecord = currentPage * recordsPerPage;
