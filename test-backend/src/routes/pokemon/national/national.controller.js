@@ -14,7 +14,7 @@ const formatMoveData = (move, dbMove) => ({
   type: dbMove.type,
   category: dbMove.category,
   pp: dbMove.pp,
-  power: dbMove.pp,
+  power: dbMove.power,
   accuracy: dbMove.accuracy,
   contact: dbMove.contact,
   shortEffect: dbMove.effect?.shortEffect,
