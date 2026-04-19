@@ -20,7 +20,7 @@ export const tierColor = (title, stat) => {
       five: "bg-sky-300",
       six: "bg-purple-200",
       seven: "bg-purple-50",
-      seven: "bg-black",
+      eight: "bg-black",
     };
   
     if (title === 'hp'){

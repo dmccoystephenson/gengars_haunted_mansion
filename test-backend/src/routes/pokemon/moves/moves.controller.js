@@ -9,17 +9,12 @@ const gameDropDown = require("../variables/gameDropDown");
 const moveExists = asyncHandler(async (request, response, next) => {
   const { id } = request.params;
   let move = null;
-  /**
-   * This ID can be either a Number Id or the name of the move
-   * However the variable is always ID as the route doesn't change
-   * This check verifies if Id is equal to a Number.
-   */
+
   isNaN(id)
     ? (move = await Moves.findOne({ key: id }).lean())
     : (move = await Moves.findById(Number(id)).lean());
 
   if (!move) {
-    // If move does not return from DB.
     response.status(400);
     throw new Error("Move not found.");
   } else {
@@ -30,85 +25,45 @@ const moveExists = asyncHandler(async (request, response, next) => {
 
 /* ------- Helper Functions ------- */
 
-/**
- * This is designed to get all the pokemon that can learn this move
- * in any form and attach it to the return move.
- * As pokemon get added this should automatically work with the updated dex.
- * @param {String} move
- * @param {String} game
- * @returns Object containing pokemon that can learn move.
- */
-const getPokemonThatKnowMoveByGame = async (move, game) => {
-  // Create return object.
+const addToCategory = (collection, category, pokemon) => {
+  if (!collection[category]) {
+    collection[category] = [];
+  }
+  collection[category].push(pokemon);
+};
+
+const findMoveInList = (moveList, moveName, isObjectList) =>
+  isObjectList
+    ? moveList.find((listMove) => listMove.name === moveName)
+    : moveList.find((listMove) => listMove === moveName);
+
+const getPokemonThatKnowMoveByGame = async (moveName, game) => {
   const pokemonThatLearnMove = {};
-  /**
-   * Get all pokemon, the reason this is not game specific is,
-   * because other pokemon can exist outside the dex numbers.
-   */
   const gameDex = await National.find()
     .select(`pokedexNumber name type moves.${game}`)
     .sort({ _id: 1 });
-  // Go through every pokemon.
+
   gameDex.forEach((pokemon) => {
-    // Check if the associated game exists.
-    if (pokemon.moves[game]) {
-      // Create base return object outside of level-up, etc..
-      const basePokemon = {
-        id: pokemon._id,
-        name: pokemon.name.english,
-        type: pokemon.type,
-      };
-      // TODO: Find a way to write a function that does this once with different parameters.
-      for (const [key, value] of Object.entries(pokemon.moves[game])) {
-        if (key === "level-up") {
-          const foundMove = value.find((listMove) => listMove.name === move);
-          if (foundMove) {
-            const levelUpPokemon = {
-              ...basePokemon,
-              level: foundMove.lvl,
-            };
-            if (pokemonThatLearnMove["level-up"]) {
-              pokemonThatLearnMove["level-up"].push(levelUpPokemon);
-            } else {
-              pokemonThatLearnMove["level-up"] = [];
-              pokemonThatLearnMove["level-up"].push(levelUpPokemon);
-            }
-          }
-        } else if (key === "egg") {
-          const foundMove = value.find((listMove) => listMove === move);
-          if (foundMove) {
-            const eggPokemon = {
-              ...basePokemon,
-              eggGroup: pokemon.eggGroup,
-            };
-            if (pokemonThatLearnMove.egg) {
-              pokemonThatLearnMove.egg.push(eggPokemon);
-            } else {
-              pokemonThatLearnMove.egg = [];
-              pokemonThatLearnMove.egg.push(eggPokemon);
-            }
-          }
-        } else if (key === "technical-machine") {
-          const foundMove = value.find((listMove) => listMove.name === move);
-          if (foundMove) {
-            if (pokemonThatLearnMove["technical-machine"]) {
-              pokemonThatLearnMove["technical-machine"].push(basePokemon);
-            } else {
-              pokemonThatLearnMove["technical-machine"] = [];
-              pokemonThatLearnMove["technical-machine"].push(basePokemon);
-            }
-          }
-        } else if (key === "reminder") {
-          const foundMove = value.find((listMove) => listMove === move);
-          if (foundMove) {
-            if (pokemonThatLearnMove.reminder) {
-              pokemonThatLearnMove.reminder.push(basePokemon);
-            } else {
-              pokemonThatLearnMove.reminder = [];
-              pokemonThatLearnMove.reminder.push(basePokemon);
-            }
-          }
-        }
+    if (!pokemon.moves[game]) return;
+
+    const basePokemon = {
+      id: pokemon._id,
+      name: pokemon.name.english,
+      type: pokemon.type,
+    };
+
+    for (const [category, moveList] of Object.entries(pokemon.moves[game])) {
+      const isObjectList = category === "level-up" || category === "technical-machine";
+      const foundMove = findMoveInList(moveList, moveName, isObjectList);
+
+      if (foundMove) {
+        const pokemonEntry = category === "level-up"
+          ? { ...basePokemon, level: foundMove.lvl }
+          : category === "egg"
+          ? { ...basePokemon, eggGroup: pokemon.eggGroup }
+          : basePokemon;
+
+        addToCategory(pokemonThatLearnMove, category, pokemonEntry);
       }
     }
   });
@@ -116,7 +71,6 @@ const getPokemonThatKnowMoveByGame = async (move, game) => {
 };
 
 const getMoveGameDropDown = (generation) => {
-  // gameDropDown length current is 18
   switch (Number(generation)) {
     case 9:
       return gameDropDown.slice(0, -17);
@@ -173,7 +127,6 @@ const readMove = asyncHandler(async (request, response) => {
 });
 
 const listMoves = asyncHandler(async (request, response) => {
-  // Get all moves, only return data for table
   const moves = await Moves.find()
     .select("name.english type category pp power accuracy")
     .sort({ _id: 1 });

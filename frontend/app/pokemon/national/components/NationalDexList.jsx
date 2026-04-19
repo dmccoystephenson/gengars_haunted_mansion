@@ -8,7 +8,7 @@ import NationalDexFilters from "./NationalDexFilters";
 import { nationalHeaders } from "@/components/variables/pokemonHeaders";
 
 export default function NationalDexList({ pokedex }) {
-  const [recordsPerPage, setRcordsPerPage] = useState(100);
+  const [recordsPerPage, setRecordsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;

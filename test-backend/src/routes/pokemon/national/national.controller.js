@@ -1,4 +1,3 @@
-// This lets use use try catch without always have to catch an error
 const asyncHandler = require("express-async-handler");
 const National = require("../../../models/pokemon/nationalModel");
 const Moves = require("../../../models/pokemon/movesModel");
@@ -8,60 +7,40 @@ const { connect, disconnect } = require("../connection");
 
 /* ---------- Helpers ---------- */
 
+const formatMoveData = (move, dbMove) => ({
+  ...move,
+  id: dbMove._id,
+  name: dbMove.name.english,
+  type: dbMove.type,
+  category: dbMove.category,
+  pp: dbMove.pp,
+  power: dbMove.pp,
+  accuracy: dbMove.accuracy,
+  contact: dbMove.contact,
+  shortEffect: dbMove.effect?.shortEffect,
+  target: dbMove.target,
+  contest: dbMove.contest,
+  priority: dbMove.priority,
+});
+
 const getPokemonMoves = (pokemonMoves, dbMoves) => {
   const returnMoves = {};
   for (const [game, methodList] of Object.entries(pokemonMoves)) {
     returnMoves[game] = {};
     for (const [method, list] of Object.entries(pokemonMoves[game])) {
-      if (typeof list[0] === typeof {}) {
-        const returnList = list.map((move) => {
-          const foundMove = dbMoves.find(
-            (dbMove) => dbMove.name.english === move.name
-          );
-          if (foundMove) {
-            return {
-              ...move,
-              id: foundMove._id,
-              name: foundMove.name.english,
-              type: foundMove.type,
-              category: foundMove.category,
-              pp: foundMove.pp,
-              power: foundMove.pp,
-              accuracy: foundMove.accuracy,
-              contact: foundMove.contact,
-              shortEffect: foundMove.effect?.shortEffect,
-              target: foundMove.target,
-              contest: foundMove.contest,
-              priority: foundMove.priority,
-            };
-          }
-        });
-        returnMoves[game][method] = returnList;
-      } else {
-        // Must be an array
-        const returnList = list.map((move) => {
-          const foundMove = dbMoves.find(
-            (dbMove) => dbMove.name.english === move
-          );
-          if (foundMove) {
-            return {
-              id: foundMove._id,
-              name: foundMove.name.english,
-              type: foundMove.type,
-              category: foundMove.category,
-              pp: foundMove.pp,
-              power: foundMove.pp,
-              accuracy: foundMove.accuracy,
-              contact: foundMove.contact,
-              shortEffect: foundMove.effect?.shortEffect,
-              target: foundMove.target,
-              contest: foundMove.contest,
-              priority: foundMove.priority,
-            };
-          }
-        });
-        returnMoves[game][method] = returnList;
-      }
+      const isObjectList = typeof list[0] === typeof {};
+      const returnList = list.map((move) => {
+        const moveName = isObjectList ? move.name : move;
+        const foundMove = dbMoves.find(
+          (dbMove) => dbMove.name.english === moveName
+        );
+        if (foundMove) {
+          return isObjectList
+            ? formatMoveData(move, foundMove)
+            : formatMoveData({}, foundMove);
+        }
+      });
+      returnMoves[game][method] = returnList;
     }
   }
   return returnMoves;
@@ -90,71 +69,40 @@ const getPokemonForms = async (pokemonId, formsTab, dbMoves) => {
   return returnForms;
 }
 
-const getPokemonBaseStats = (baseStats) => {
-  /**
-   * Declare rounded stats to get width
-   *  and pass into tierColor function
-   */
-  const hpWidth = Math.round([baseStats.hp * 100] / 255);
-  const atkWidth = Math.round([baseStats.atk * 100] / 180);
-  const defWidth = Math.round([baseStats.def * 100] / 180);
-  const spatkWidth = Math.round([baseStats.spatk * 100] / 230);
-  const spdefWidth = Math.round([baseStats.spdef * 100] / 230);
-  const spdWidth = Math.round([baseStats.spd * 100] / 200);
+const calculateStatWidth = (baseStat, maxStat) =>
+  Math.round((baseStat * 100) / maxStat);
 
-  const hp = {
-    base: baseStats.hp,
-    min: minStatFormula('hp', baseStats.hp),
-    max: maxStatFormula('hp', baseStats.hp),
-    tier: getTierColor(hpWidth),
-    width: hpWidth
-  };
-  const atk = {
-    base: baseStats.atk,
-    min: minStatFormula('atk', baseStats.atk),
-    max: maxStatFormula('atk', baseStats.atk),
-    tier: getTierColor(atkWidth),
-    width: atkWidth
-  };
-  const def = {
-    base: baseStats.def,
-    min: minStatFormula('def', baseStats.def),
-    max: maxStatFormula('def', baseStats.def),
-    tier: getTierColor(defWidth),
-    width: defWidth
-  };
-  const spatk = {
-    base: baseStats.spatk,
-    min: minStatFormula('spatk', baseStats.spatk),
-    max: maxStatFormula('spatk', baseStats.spatk),
-    tier: getTierColor(spatkWidth),
-    width: spatkWidth
-  };
-  const spdef = {
-    base: baseStats.spatk,
-    min: minStatFormula('spdef', baseStats.spdef),
-    max: maxStatFormula('spdef', baseStats.spdef),
-    tier: getTierColor(spdefWidth),
-    width: spdefWidth
-  };
-  const spd = {
-    base: baseStats.spd,
-    min: minStatFormula('spd', baseStats.spd),
-    max: maxStatFormula('spd', baseStats.spd),
-    tier: getTierColor(spdWidth),
-    width: spdWidth
-  };
-
+const buildStatObject = (statName, baseStat, maxStat) => {
+  const width = calculateStatWidth(baseStat, maxStat);
   return {
-    hp,
-    atk,
-    def,
-    spatk,
-    spdef,
-    spd,
+    base: baseStat,
+    min: minStatFormula(statName, baseStat),
+    max: maxStatFormula(statName, baseStat),
+    tier: getTierColor(width),
+    width,
+  };
+};
+
+const STAT_MAX_VALUES = {
+  hp: 255,
+  atk: 180,
+  def: 180,
+  spatk: 230,
+  spdef: 230,
+  spd: 200,
+};
+
+const getPokemonBaseStats = (baseStats) => {
+  return {
+    hp: buildStatObject('hp', baseStats.hp, STAT_MAX_VALUES.hp),
+    atk: buildStatObject('atk', baseStats.atk, STAT_MAX_VALUES.atk),
+    def: buildStatObject('def', baseStats.def, STAT_MAX_VALUES.def),
+    spatk: buildStatObject('spatk', baseStats.spatk, STAT_MAX_VALUES.spatk),
+    spdef: buildStatObject('spdef', baseStats.spdef, STAT_MAX_VALUES.spdef),
+    spd: buildStatObject('spd', baseStats.spd, STAT_MAX_VALUES.spd),
     total: baseStats.total,
-  }
-}
+  };
+};
 
 const hpFormula = (baseStat, IV, EV, level) => {
   return Math.floor(
@@ -222,7 +170,6 @@ const pokemonExists = asyncHandler(async (request, response, next) => {
     : (pokemon = await National.findById(Number(id)).lean());
 
   if (!pokemon) {
-    // If pokemon does not return from DB
     response.status(400);
     throw new Error("Pokemon not found.");
   } else {
@@ -232,12 +179,8 @@ const pokemonExists = asyncHandler(async (request, response, next) => {
 });
 
 const getMoves = asyncHandler(async (request, response, next) => {
-  // Getting all the moves right away will be faster then requesting it every time we need information
   const moves = await Moves.find().lean();
-  // Working on
-  // const moves = await Moves.find().select('name.english type category contest pp power accuracy contact generation target effect priority').lean();
   if (!moves) {
-    // If moves do not return from DB.
     response.status(400);
     throw new Error("Moves data not found, error on Server/Database side.");
   } else {
@@ -255,15 +198,10 @@ const reformatPokemonBaseStats = asyncHandler(async (request, response, next) =>
 
 const reformatPokemonEvolution = asyncHandler(async (request, response, next) => {
   const { pokemon } = response.locals;
-  // If evolution is not null, pokemon without evo lines are null
   if (pokemon.evolution) {
-    // Get evolution object tree
     const evolutionTree = await Evolutions.findById(pokemon.evolution);
-    // If pokemon has a tree, else DB does not yet contain tree
     if (evolutionTree) {
       pokemon.evolution = evolutionTree;
-    } else {
-      pokemon.evolution = pokemon.evolution;
     }
     response.locals.pokemon = pokemon;
   }
@@ -276,14 +214,10 @@ const reformatPokemonEvolution = asyncHandler(async (request, response, next) =>
  *  basic move information
  * @returns {JSON} all data for a specific Pokemon
  */
-// TODO: Make this page work so when you go from a dex to that page it has the moves
 const readPokemonByGame = asyncHandler(async (request, response, next) => {
   const { pokemon, moves } = response.locals;
   const { game } = request.params;
-  // Reformat moves to have pop up information.
-  const newMoves = getPokemonMoves(pokemon.moves, moves);
-  pokemon.moves = newMoves;
-
+  pokemon.moves = getPokemonMoves(pokemon.moves, moves);
   disconnect();
   response.status(200).json(pokemon);
 });
@@ -298,15 +232,12 @@ const readPokemonByGame = asyncHandler(async (request, response, next) => {
  */
 const readPokemon = asyncHandler(async (request, response, next) => {
   const { pokemon, moves } = response.locals;
-  // See if pokemon has multiple forms
   const pokemonForms = await FormTabs.findById(Math.floor(pokemon._id)).lean();
-  // Get pokemon forms tab data if formsTab exists.
   if (pokemon.formsTab) {
     const forms = await getPokemonForms(pokemon._id, pokemonForms.tab, moves);
     disconnect();
     response.status(200).json(forms);
   } else {
-    // Get more detailed information for each pokemon move for MoveModal.
     pokemon.moves = getPokemonMoves(pokemon.moves, moves);
     disconnect();
     response.status(200).json(pokemon);
@@ -319,17 +250,12 @@ const readPokemon = asyncHandler(async (request, response, next) => {
  *  The Pokemon National Dex up to 898
  */
 const listNational = asyncHandler(async (request, response) => {
-  // Define parameters for types, and stats
   const { typeOne, typeTwo, asc, desc } = request.query;
-  // Create return array to avoid repetitive code
   let national = [];
-  // Creates whats returned from model
   const nationalSelect = "key name.english type abilities baseStats";
-  // Create sorting object for array return
   const sort = asc ? { [asc]: 1 } : desc ? { [desc]: -1 } : { _id: 1 };
-  // Checks for pokemon types from parameters
+
   let typeStatement = null;
-  // Type check else statement
   if (typeOne && typeTwo) {
     typeStatement = [
       { "type.one": typeOne, "type.two": typeTwo },
@@ -340,14 +266,13 @@ const listNational = asyncHandler(async (request, response) => {
   } else if (!typeTwo && typeOne) {
     typeStatement = [{ "type.one": typeOne }, { "type.two": typeOne }];
   }
-  // if the typeStatement exists apply typeStatement
+
   if (typeStatement) {
     national = await National.find()
       .or(typeStatement)
       .select(nationalSelect)
       .sort(sort);
   } else {
-    // return national dex without filters
     national = await National.find().select(nationalSelect).sort(sort);
   }
 
