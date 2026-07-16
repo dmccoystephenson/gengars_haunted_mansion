@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import DataRow from "./DataRow";
 import { typeColors } from "@/components/variables/typeColors";
 
 export default function PokemonLinkCard({

@@ -1,6 +1,5 @@
 export const dynamic = 'force-dynamic';
 
-// import PokemonPage from "@/components/pokemon/PokemonPage";
 import PokemonPage from "../components/PokemonPage";
 
 const getPokemonByGame = async (id, game) => {

@@ -7,8 +7,7 @@ import { abilities } from "@/constants/pokemonHeaders";
 import PokemonTableLayout from "@/components/pokemon/PokemonTableLayout";
 
 export default function AbilitiesList({ list }) {
-  // Pagination
-  const [recordsPerPage, setRcordsPerPage] = useState(100);
+  const [recordsPerPage, setRecordsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;

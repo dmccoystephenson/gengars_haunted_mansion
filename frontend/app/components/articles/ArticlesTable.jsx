@@ -1,6 +1,4 @@
 export default function ArticlesTable() {
-
-    const th = "border"
   return (
     <div className="border m-1 p-1 bg-gray-700 overflow-x-auto">
     <table>

@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import PokemonBuild from ".//PokemonBuild";
+import PokemonBuild from "./PokemonBuild";
 
 export default function PokemonBuildModal({     
     id,
@@ -19,11 +19,6 @@ export default function PokemonBuildModal({
     evs,
     terra,
  }) {
-  const styles = {
-    typec: " rounded-md w-1/4 text-center opacity-60",
-    test: ''
-  },{test, typec} = styles;
-
   const [isOpen, setIsOpen] = useState(false);
   const  closeModal = () => {
     setIsOpen(false);

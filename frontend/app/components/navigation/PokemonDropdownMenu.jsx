@@ -18,7 +18,7 @@ export default function PokemonDropdownMenu() {
             <div
                 id="dropdownDots"
                 className={`z-10 ${open ? "" : "hidden"}  rounded-lg`}
-                key={"something lol"}
+                key={"dropdown-menu"}
             >
                 <ul
                     className="fixed top-20 right-0 w-full phone:w-1/2 h-1/2 overflow-y-scroll bg-gray-900 border-4 rounded border-purple-100 py-2 text-gray-700 dark:text-gray-200"
