@@ -3,10 +3,11 @@
 
 #### *Table of Contents*
 0. [How to get started](#how-to-get-started)
-1. [Why did I make this?](#why-did-i-make-this)
-2. [The Tech Stack](#the-tech-stack)
-3. [Structure of the Pages](#structure-of-the-pages)
-4. [Future Goals & Updates](#future-goals--updates)
+1. [Docker](#docker)
+2. [Why did I make this?](#why-did-i-make-this)
+3. [The Tech Stack](#the-tech-stack)
+4. [Structure of the Pages](#structure-of-the-pages)
+5. [Future Goals & Updates](#future-goals--updates)
 
 ---
 
@@ -17,6 +18,108 @@ After downloading from github you want to run `yarn setup` which will download a
 After running setup you can run `yarn dev` which will run the backend then the frontend and you are all set to check out localhost:3000 for the client and localhost:5000 for the server.
 
 You will need a DB_CONNECTION link in order to actually establish a connection. There is a workaround to connect directly to the running version of the server but you will not be able to test backend changes without the connection link.
+
+## Docker
+
+### Prerequisites
+
+| Tool | Minimum version |
+|------|----------------|
+| Docker | &ge; 24 |
+| Docker Compose | &ge; 2.20 |
+
+Docker Desktop (macOS / Windows) bundles both.
+
+### Environment setup
+
+Copy the sample environment file and edit the values:
+
+```sh
+cp sample.env .env
+```
+
+Open `.env` and review/change the following **required** variables:
+
+| Variable | Description |
+|----------|-------------|
+| `MONGO_URI` | MongoDB connection string. The default works with the bundled Compose `mongo` service. |
+| `MONGO_INITDB_ROOT_USERNAME` | Root username for the MongoDB container. |
+| `MONGO_INITDB_ROOT_PASSWORD` | Root password for the MongoDB container — **change this**. |
+| `REACT_APP_BACKEND_URL` | URL of the backend API as seen by the Next.js server. Default: `http://api:5000`. |
+| `PORT` | Port for the Express backend (default `5000`). |
+| `NODE_ENV` | Must **not** be `production` for the backend to listen on a port. Default: `development`. |
+
+### Build the images
+
+Dependencies are installed automatically inside Docker — no need to run
+`yarn setup` first.
+
+```sh
+docker build --target backend  -t gengars-api .
+docker build --target frontend -t gengars-app .
+```
+
+### Run with Compose
+
+Start all services (MongoDB, API, and frontend) in the foreground:
+
+```sh
+docker compose up --build
+```
+
+Or in detached (background) mode:
+
+```sh
+docker compose up -d --build
+```
+
+The frontend is available at **http://localhost:3000** and the API at **http://localhost:5000**.
+
+### Stop and remove containers
+
+```sh
+docker compose down
+```
+
+To also remove persistent volumes (MongoDB data):
+
+```sh
+docker compose down -v
+```
+
+### Run the application standalone
+
+If you only need the backend (bring your own MongoDB):
+
+```sh
+docker run -p 5000:5000 --env-file .env gengars-api
+```
+
+If you only need the frontend (the backend must already be reachable at the URL set in `REACT_APP_BACKEND_URL`):
+
+```sh
+docker run -p 3000:3000 --env-file .env gengars-app
+```
+
+### Verify the application is healthy
+
+```sh
+docker compose ps
+```
+
+Check the health status of the API container:
+
+```sh
+docker inspect --format='{{.State.Health.Status}}' "$(docker compose ps -q api)"
+```
+
+### Updating
+
+After making code changes, rebuild and restart:
+
+```sh
+docker compose up --build
+```
 
 ## ***Why did I make this?***
 
